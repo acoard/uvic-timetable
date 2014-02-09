@@ -1,0 +1,73 @@
+body {
+	padding-left: 75px;
+	padding-right: 75px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	background-color: #f2ebe3;
+}
+
+h1 {
+	padding-bottom: 5px;
+	text-align: center;
+	border-bottom: thick solid #ebd484;
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+
+
+section {
+	padding: 15px;
+	border-radius: 15px;
+}
+
+section p {
+	color: #eaeaea;
+	text-align: justify;
+	font-size: 120%;
+}
+
+section:nth-of-type(even) {
+	background-color: #a98f7c
+}
+
+section:nth-of-type(even) p, section:nth-of-type(even) li {
+	color: #efefef;
+}
+
+section:nth-of-type(odd){
+	background-color: #755944;
+
+}
+
+
+h3 {
+	color: #B4CBFF;
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+img {
+	width: 1000px;
+}
+
+#content {
+    padding-left: 100px;
+}
+
+#links {
+    left: 1px;
+    position: fixed;
+    width: 170px;
+}
+
+#links ul li ul {
+    margin-left: -30px;
+}
+
+figcaption {
+ color: #efefef;
+ font-style:italic;
+ font-size: 18px;
+ margin-bottom: 25px;
+ border-bottom: 2px dotted #222;
+}
+

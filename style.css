@@ -37,6 +37,8 @@ h2 {
 	width: 100%;
 }
 
+/*
+THIS IS FOR THE OLD CTRL-PANEL.  Pretty sure it can be deleted as of 14/1/14
 #control-panel{
 	display: none;
 	text-align: center;
@@ -47,11 +49,21 @@ h2 {
 	background-color: #EFC94C;
 	position: absolute;
 	z-index: 1;
+}*/
+
+#control-panel{
+    display: none;
 }
 
 #CRN-panel * h4 {
 	text-align: center;
 }
+
+#control-panel div {
+    text-align: center;
+}
+
+
 
 th {
 	text-align: center;
@@ -77,10 +89,21 @@ td.hours {
 }
 
 .footer {
+  padding-top: 30px;
   padding-left: 15px;
   padding-right: 15px;
   text-align: right;
 }
+
+.footer a {
+    color: #444;
+}
+
+
+#modal-text img {
+    overflow: hidden;#
+}
+
 
 #control-panel.affix {
 		position: relative;
@@ -116,24 +139,59 @@ td.hours {
 	}
 } 
 
-.btn-primary, .navbar-brand, .navbar button.btn.btn-success {
+.btn-primary, .navbar button.btn.btn-success {
  font-family: 'Open Sans', sans-serif;
 }
 
-
-
-
-div.jumbotron h1 {
- font-family: 'Cookie', sans-serif;
+.navbar-brand:first-letter {
+    font-family: 'Life Savers', sans-serif;
+    background-color: #666;
+    color: #FFF;
+    display: inline-block;
+    padding: 5px 5px 5px 5px;
+    border-radius: 3px;
+    font-size: 22px;
 }
+
 
 div.jumbotron {
     background-color: #fff4f4;
 }
 
 .jumbotron h1 {
-    text-align: center;
+ font-family: 'Life Savers', sans-serif;
+ text-align: center;
 }
+
+.jumbotron h1:first-letter {
+    background-color: #666;
+    color: #FFF;
+    font-style: normal;
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 3px;
+    margin-right: 2px;
+}
+
+
+#dayHeader {
+ text-transform:uppercase;
+ font-weight: 100;
+ font-size: 200%;
+ margin-top: -3px;
+ margin-bottom: -1px;
+ 
+}
+#dayHeader:first-letter {
+ font-weight: 900;
+ font-size: 150%
+ 
+}
+
+#save {
+    cursor: pointer;
+}
+
 
 /*FIX - This stops the navbar having a weird linebreak on iPhone chrome*/
 a.navbar-brand {
@@ -208,17 +266,4 @@ a.navbar-brand {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: #f9f5f8;
     }
-}
-
-.navbar button {
-    padding-bottom: 3px;
-    padding-top: 3px;
-    font-size: 90%;
-    background-color: #4a64c6;
-    border-color: #444;
-}
-
-.navbar button:hover {
-    background-color: #3d53a9;
-    border-color: #444;   
 }

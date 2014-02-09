@@ -1,0 +1,283 @@
+<!-- 
+==============================
+Adam Coard's "UVic Timetables"
+==============================
+ 1. I use Bootstrap to provide the core responsivity of the site.
+ 2. Also, since I use jQuery 2.x, there may not be support for IE8.
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+
+    <title>Tables for Uvic</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="style.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Cookie&subset=latin" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open Sans&subset=latin" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Life Savers&subset=latin" rel="stylesheet" type="text/css">
+    <script src="bootstrap.js"></script>
+    <script src="code.js"></script>  <!-- This is where my custom JavaScript is. -->
+    <script src="smooth-scroll.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+
+  <body>
+
+        <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">T</a> 
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a id="save" class="button">Save</a></li>
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Options</a></li>
+                <li><a href="#">Legal</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Follow me!</li>
+                <li><a href="#">acoard.com</a></li>
+                <li><a href="#">Twitter</a></li>
+              </ul>
+            </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1>Tables for UVic</h1>
+        <p class="lead">A simple solution to getting a mobile-friendly <b>timetable</b> of your courses at the University of Victoria.
+          <a href="#POPUPTIME">Learn more.</a>  </p>
+        <p><a class="btn btn-lg btn-success" id="control-panel-btn"type="button"><span id="btnText">Just input a CRN to get started</span></a></p>             
+      </div>
+
+
+
+      <div id="schedule">
+
+      	<div class="row">
+      		<div class="col-md-4">
+		     	  <button type="button" id="PrevDay" class="btn btn-primary btn-block">Previous</button>
+		     </div>
+			 <div class="col-md-4">
+		      	<h2 id="dayHeader">Monday</h2>
+		    </div>
+		    <div class="col-md-4">
+		      	<button type="button" id="NextDay" class="btn btn-primary btn-block">Next</button>
+		    </div>
+		    </div>
+
+
+      <table class="table table-hover">
+      	<tr>
+      		<th class="hours">Hours</th>
+      		<th class="courses">Courses</th>
+      		<th class="remove">Remove</th>
+      	</tr>
+      	<tr id="0830">
+      		<td class="hours">8:30</td>
+      		<td class="courses" rowspan="1"></td>
+      		<td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td> <!-- Must update code.js getCellInfo if structure to <tr> changes. -->
+      	</tr>
+        <tr id="0900">
+          <td class="hours">9:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0930">
+      		<td class="hours">9:30</td>
+      		<td class="courses" rowspan="1"></td>
+      		<td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="1000">
+          <td class="hours">10:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="1030">
+      		<td class="hours">10:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="1100">
+          <td class="hours">11:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="1130">
+      		<td class="hours">11:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="1200">
+          <td class="hours">12:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="1230">
+      		<td class="hours">12:30</td>
+      		<td class="courses" rowspan="1"></td>
+      		<td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="100">
+          <td class="hours">1:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+		<tr id="0130">
+      		<td class="hours">1:30</td>
+      		<td class="courses" rowspan="1"></td>
+      		<td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="200">
+          <td class="hours">2:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0230">
+      		<td class="hours">2:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="300">
+          <td class="hours">3:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0330">
+      		<td class="hours">3:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="400">
+          <td class="hours">4:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0430">
+      		<td class="hours">4:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="500">
+          <td class="hours">5:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0530">
+      		<td class="hours">5:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="600">
+          <td class="hours">6:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0630">
+      		<td class="hours">6:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+        <tr id="700">
+          <td class="hours">7:00</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+        </tr>
+      	<tr id="0730">
+      		<td class="hours">7:30</td>
+          <td class="courses"></td>
+          <td><button class="class-info" data-toggle="modal" data-target="#course-info-modal"><i class="fa fa-info"></i></button><button type="button" class="close" aria-hidden="true">&times;</button></td>
+      	</tr>
+      </table>
+      </div>  <!-- #schedule -->
+
+
+
+
+    <div class="footer">
+        <p><a href="http://www.acoard.com">&copy; Adam Coard</a></p>
+      </div>
+  
+
+    </div> <!-- /container -->
+
+
+
+      <!-- Control Panel -->
+<div id="control-panel">
+        <form roles="form">
+          <h4>Enter your Course Registration Number or start typing in your course, e.g. PHIL 308.</h4>
+          <label for="CRN-input">CRN: </label>
+          <input id="CRN-input" placeholder="CRN" size="8" class="course1">
+          <i class="fa fa-check"></i> <!-- TODO - Update on form validation. -->
+          <span class="lookup-info course1"><span class="course-name">PHIL 309: Imanuel Kant,</span>
+          <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span>
+          <a id="add-more" href="#more">Add more...</a>
+          <div>
+            <button type="button" class="btn btn-default" id="CRN-close">Close</button>
+            <button type="button" class="btn btn-primary" id="CRN-close">Lookup CRNs</button>
+            <button type="submit" class="btn btn-primary" id="CRN-submit" disabled="disabled">Submit</button>
+          </div>
+      </form>
+  </div>
+
+
+
+  <!-- Button trigger modal -->
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#course-info-modal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="course-info-modal" tabindex="-1" role="dialog" aria-labelledby="Course location" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="course-info-label">Building Location</h4>
+      </div>
+      <div class="modal-body">
+        <span id="modal-text">If you're seeing this, something went wrong.  Sorry!</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

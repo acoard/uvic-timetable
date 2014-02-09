@@ -1,16 +1,10 @@
+// TODO: Add a way so that when updating to a new semester file it automatically wipes previous saves.  Otherwise it'll lookup values that don't exist.
+
 $( document ).ready(function() {  // Function #1
 	$ctrl = $('#control-panel');
 	$("#control-panel-btn").click(function() { //Function #2
 		var btn = $(this); //This lets me reference it in the nested scope.
-		// $('#control-panel').css({
-		// 	position: 'absolute',
-		// 	top: btn.offset().top + btn.outerHeight() + 10,
-		// 	left: btn.offset().left + 10,
-		// 	width: btn.width() + 30,
-		// 	height: 125
-		// }).show(300);
 		$ctrl.css({display: 'block'});
-		//$ctrl.affix({ offset: { top: 100 }});​
 		$ctrl.affix()
 		})
 	$('#CRN-submit').click(function(){ //Function #3
@@ -38,30 +32,101 @@ $( document ).ready(function() {  // Function #1
 	if ($(window).width() >= 610) {
 		$('#control-panel').appendTo('.jumbotron');
 	}
+
+	//Add event handlers for every 'X' in each row.
+	$('.close').click(function() {
+		row = $(this).parents()[1]; //If HTML changes, this 
+		startTime = $(row).attr('id');
+		coursesArray = Sched["courses"];
+		for (var key in Sched["courses"]){
+			courseStart = trimTime(Sched["courses"][key].timeblock);
+			if (startTime == courseStart){
+				console.log("Removing course...")
+				Sched.removeCourse(key);
+				setTimeout(run, 150);
+			}
+		}
+	});
+	$('.class-info').click(function(){
+		console.log("Info click");
+		row = $(this).parents()[1];
+		building = trimRoom($(row).children('.courses').children('span').text());
+		if (building){
+			console.log(building);
+			$('#modal-text').html('<img class="img-responsive" src="img/' + building.toLowerCase() + '.gif">');
+		}
+		else if (building == '') {
+			$('#modal-text').html("Either there's no course in this row, or something went wrong.  If you think this is a problem with Tables, please contact me!")
+		}
+		
+	});
+	$('#save').click(function(){
+		Sched.saveSession();
+	})
+	if (localStorage.legnth > 0){loadSession();}
+	// The below code is for the new control panel.
+// TODO: Change from using IDs to classes, as I intend on having up to 5 inputs.
+	$('#CRN-input').focus(function() {
+	  console.log("FOCUS!");
+	});
+
+	$('#CRN-input').blur(function() {
+	  console.log("BLUR!");
+	  console.log($(this).attr("class"))
+	  if ($('#CRN-input').val().length >= 5) {
+		console.log("Input >= 5!, calling lookupCRN()");
+		CRN = $('#CRN-input').val()
+		course = $(this).attr("class")
+		lookupCRN(CRN, course)
+	}
+	});
+	$('#add-more').click(function(){
+		this.after("<p>TEST</p>");
+	});
 });
 
 $ctrl = $('#control-panel');
+var DEBUG = 0;
 
-/* WORKFLOW / README
+function lookupCRN(search, courseNum) {
+	///This function gets the info for a CRN and shows it in the Control Panel without adding it to the schedule.
+	var tempVal;
+	var returnVal;
+		$.getJSON('semester2.json', function(jdata) {
+			$.each(jdata, function(key, val) {
+				if (search == val.crn){ 
+					// console.log(val)
+					returnVal = val;
+					
+				}
+			})
+		}).done(function() {
+			console.log(typeof(returnVal));
+			if (typeof(returnVal) != "undefined"){
+				console.log(returnVal);
+				var course = "." + String(courseNum);
+				// $('.course1 .course-name').text(returnVal.discipline + ' ' + returnVal.courseNumber);
+				$(course + ' .course-name').text(returnVal.discipline + ' ' + returnVal.courseNumber +': ' + returnVal.verboseName+', ');
+				$(course + ' .section').text(returnVal.courseBlock +',');
+				$(course + ' .time-days').text(returnVal.courseDay + ' ' + returnVal.timeblock);
 
-Here's the workflow:
-*Add an item via the page.
-*Make the schedule with "Sched.makeSched()"
-*Check it worked with Sched.schedule
-*Use Sched.schedule.Tuesday an argument for fillTable
-fillTable(Sched.schedule.Tuesday)
+			}
+		})
+}
 
-TODO:
-*Track which day it is and only update that day.  Change days.
-*Fill out run(), make it trigger on the submit of a CRN.
+lookupCRN()
 
+function trimTime(input){
+	//Input: 06:30 pm-09:20 Output: 0630
+	//Input is found in the Course objects, output in CSS/HTML.
+	return input.slice(0,5).replace(':','')
+}
 
-FIXME: 
-*Is Monday displaying right?
-*Days aren't looping properly (previous doesn't go back but forward!)
-*on changeDay() friday is gone to twice Thursday->Fri->Fri->Monday
+function trimRoom(input){
+	//Input: COR A229 output: COR
+	return input.split(' ')[0];
+}
 
-*/
 var day;
 day = "Monday";
 var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -75,7 +140,6 @@ function run(){
 function changeDay(input){
 	//Input to take:  "next" "back" and the name of the specific day.
 	clearTable();
-	input = "next";
 	currentDay = daysOfWeek.indexOf(day);
 	console.log("Current day initial: " + String(currentDay));
 	if (input == "next") {
@@ -86,10 +150,11 @@ function changeDay(input){
 	if (input == "back") {
 		//Have to manually loop it here because I can't get decreasing modulous to work.
 		if (currentDay == 0){
-			currentDay = 5;
+			currentDay = 4;
 		} 
 		else{
-			currentDay = (1 - Math.abs(currentDay)) % 5;
+			//currentDay = 1 - Math.abs(currentDay))
+			currentDay = currentDay - 1
 		}
 		day = daysOfWeek[currentDay];
 		console.log("Back -> " + String(day));
@@ -122,7 +187,6 @@ function Course(input){
 	}
 }
 
-//FIXME: get***Day is NOT WORKING.  The .days method doesn't work for Thursday, 'Th', and furtherore it just isn't working on proper days.
 Course.prototype.getMonday = function(){
 	//Check to see if 'M' is in days, then return the timeBlock if so.
 	//return this.timetable.monday;
@@ -181,38 +245,22 @@ Course.prototype.addTimeBlock = function(day, time){
 	}
 }
 
-Course.prototype.removeTimeBlock = function(day, time){
-	//Removes ALL INSTANCES of a given input.  'time' is the input to be removed.
-	day = day.toLowerCase();
-	this.timetable[day] = jQuery.grep(this.timetable[day], function(value) {
-  		return value != time;
-	});
-}
-
 function clearTable(){
 	$("td.courses").each(function(){$(this).text('')})
 }
 
-function writeToTable(time, course){
-	//Format of time is: "09:00 am-09:50 am"
-	start = String(time).split(' ')[0].replace(":", "");
-	//$("#930 > .courses").text('hey')
-	$("#" + start + " > .courses").text("test!");
-}
-
 function fillTable(scheduleDay){
 	//Takes e.g. Sched.schedule.Tuesday as input.  Note: Sched.makeSched() must be run first.
+	//TODO: Turn this into a User.prototype.function
 	for (var entry in scheduleDay){
 		obj = Sched.schedule[day][entry];
 		time = obj[0]
 		start = String(time).split(' ')[0].replace(":", "");
 		course = obj[1];
-		desc = course["discipline"] + course["courseNumber"] + "<br>" + course["room"] + "<br>" + "<i>CRN: " + course["crn"] + "</i>";
+		desc = course["discipline"] + " " + course["courseNumber"] + " " + course["courseBlock"] + "<br><span class='room'>" + course["room"] + "</span><br>" + "<i>CRN: " + course["crn"] + "</i>";
 		$("#" + start + " > .courses").html(desc)
 	}
 }
-
-
 
 function User() {
 	//http://stackoverflow.com/questions/387707/whats-the-best-way-to-define-a-class-in-javascript
@@ -221,10 +269,17 @@ function User() {
 	this.schedule = {};
 }
 
+//TODO: Consistent naming...
 var Sched = new User()
 
 User.prototype.addCourse = function(courseObj){
 	this.courses[courseObj.crn] = courseObj;
+}
+
+User.prototype.removeCourse = function(crn) {
+	 //TODO - Add a way to get CRN.  Lookup from timeblocK?  Grabbing from html? y
+	 delete Sched.courses[crn];
+	 Sched.makeSched(); //Must be run after the deletion, otherwise the artifact remains in e.g. Sched.schedule.Monday
 }
 
 User.prototype.makeSched = function(courses){
@@ -249,7 +304,34 @@ User.prototype.makeSched = function(courses){
 	return output;
 }
 
-//var tempVal;
+
+User.prototype.saveSession = function(){
+	//Saves a list of CRNs as an array.
+	if(typeof(Storage)!=="undefined")
+  {
+  	console.log("Saving...");
+  	var arrayOfCRNs = new Array();
+  	for (crn in Sched["courses"]){
+  		arrayOfCRNs.push(crn);
+  	}
+  	localStorage.setItem('userCRNs', JSON.stringify(arrayOfCRNs));
+  }
+else
+  {
+  alert("Sorry, saving isn't supported with your browser.");
+  }
+}
+
+loadSession = function(){
+	//Loads a list of CRNs, passing each through addCRN().
+	console.log("Loading previous session's CRNs...");
+	var crns = eval(localStorage.getItem('userCRNs'));
+	for (var i = 0; i < crns.length; i++){
+		addCRN(crns[i])
+	}
+	setTimeout(run, 1000);
+}
+
 function addCRN(search) {
 		//Currently having troubles getting the function to return properly.  I think it's because it's an async fn, return in .done?
 		//INTENDED: Return the new Course object.
@@ -257,7 +339,7 @@ function addCRN(search) {
 		var temp;
 		var tempVal;
 		temp = "TEMP!";
-		$.getJSON('semester1.json', function(jdata) {
+		$.getJSON('semester2.json', function(jdata) {
 			$.each(jdata, function(key, val) {
 				if (search == val.crn){ 
 					console.log("Class found: " + val.verboseName)
@@ -266,14 +348,12 @@ function addCRN(search) {
 			})
 		})
 			.done(function() {
-			//Add the course to the Schedule object.
-			console.log("success!");
-			console.log("Temp Val --");
-
-			console.log(tempVal);
-			temp = new Course(tempVal);	
-			Sched.addCourse(temp);
-
+				//Add the course to the Schedule object.
+				temp = new Course(tempVal);	
+				console.log("Course object created:");
+				console.log(temp);
+				Sched.addCourse(temp);
+				Sched.saveSession();
 			})
 			.fail(function() {
 			console.log("bad!");
@@ -282,6 +362,21 @@ function addCRN(search) {
 			// console.log( "finished" );
 			});
 }
+
+
+
+
+
+
+
+
+if (DEBUG){
+//DEBUGGING: Remove
+setTimeout(addCRN(10105), 250);
+setTimeout(addCRN(10104), 250);
+setTimeout(run, 1500); //A really ghetto solution.  But it gives time for addCRN() to process.
+}
+
 //iPhone bug fix.  Viewport doesn't update when the keyboard is up, so this gets aroundd that.  Navbar.
 var needsScrollUpdate = false;
 $(document).scroll(function(){
