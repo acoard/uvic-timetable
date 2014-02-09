@@ -64,24 +64,31 @@ $( document ).ready(function() {  // Function #1
 		Sched.saveSession();
 	})
 	if (localStorage.legnth > 0){loadSession();}
-	// The below code is for the new control panel.
-// TODO: Change from using IDs to classes, as I intend on having up to 5 inputs.
-	$('#CRN-input').focus(function() {
-	  console.log("FOCUS!");
+	
+	
+	$("body").on("focus", "[id^=CRN-input]", function(){ 
+	  
 	});
-
-	$('#CRN-input').blur(function() {
-	  console.log("BLUR!");
-	  console.log($(this).attr("class"))
-	  if ($('#CRN-input').val().length >= 5) {
+	
+	$("body").on("blur", "[id^=CRN-input]", function(){ 
+	  if ($(this).val().length >= 5) {
 		console.log("Input >= 5!, calling lookupCRN()");
-		CRN = $('#CRN-input').val()
+		CRN = $(this).val()
 		course = $(this).attr("class")
-		lookupCRN(CRN, course)
-	}
+		lookupCRN(CRN, course)	
+		}
 	});
-	$('#add-more').click(function(){
-		this.after("<p>TEST</p>");
+	courseNum = 2; //used to give each row a unique CSS number.		
+	$("body").on("click", ".add-more", function(){
+		courseNumString = courseNum.toString();
+		$(this).after('<br><span class="course'+courseNumString+'"><label for="CRN-input">CRN: </label>\
+          <input id="CRN-input" placeholder="CRN" size="8" class="course'+ courseNumString+'">\
+          <i class="fa fa-check"></i>\
+          <span class="lookup-info course'+courseNumString+'"><span class="course-name">PHIL 309: Imanuel Kant,</span>\
+          <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span></span></span>\
+          <a class="add-more" href="#more">Add more...</a>');
+		courseNum++;
+		$(this).remove();
 	});
 });
 
@@ -101,15 +108,23 @@ function lookupCRN(search, courseNum) {
 				}
 			})
 		}).done(function() {
+			// Since this info is retrieved through an asychronous $.getJSON call, this UI editting has to occur here.
+			var course = "." + String(courseNum);
 			console.log(typeof(returnVal));
 			if (typeof(returnVal) != "undefined"){
 				console.log(returnVal);
-				var course = "." + String(courseNum);
-				// $('.course1 .course-name').text(returnVal.discipline + ' ' + returnVal.courseNumber);
-				$(course + ' .course-name').text(returnVal.discipline + ' ' + returnVal.courseNumber +': ' + returnVal.verboseName+', ');
+				$(course + ' i').attr('class', 'fa fa-check');
+				$(course + ' .course-name').text(returnVal.discipline + ' ' + returnVal.courseNumber +': ' + returnVal.verboseName.toLowerCase()+', ');
 				$(course + ' .section').text(returnVal.courseBlock +',');
 				$(course + ' .time-days').text(returnVal.courseDay + ' ' + returnVal.timeblock);
 
+			}
+		
+			else{ //undefined, course not found.
+				$('.'+courseNum+' i').attr('class', 'fa fa-exclamation-triangle');
+				$(course + ' .course-name').text(""); //Don't Use This One, CSS Is Set To Capitalize
+				$(course + ' .section').text("We're sorry, the course wasn't found.");
+				$(course + ' .time-days').text("");
 			}
 		})
 }

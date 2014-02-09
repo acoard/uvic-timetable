@@ -234,12 +234,17 @@ Adam Coard's "UVic Timetables"
 <div id="control-panel">
         <form roles="form">
           <h4>Enter your Course Registration Number or start typing in your course, e.g. PHIL 308.</h4>
-          <label for="CRN-input">CRN: </label>
-          <input id="CRN-input" placeholder="CRN" size="8" class="course1">
-          <i class="fa fa-check"></i> <!-- TODO - Update on form validation. -->
-          <span class="lookup-info course1"><span class="course-name">PHIL 309: Imanuel Kant,</span>
-          <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span>
-          <a id="add-more" href="#more">Add more...</a>
+          <span class="course1">
+              <label for="CRN-input">CRN: </label>
+              <input id="CRN-input" placeholder="CRN" size="8" class="course1">
+              <i class="fa fa-check"></i>
+              <span class="lookup-info course1">
+                <span class="course-name">PHIL 309: Imanuel Kant,</span>
+                <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span>
+              </span></span>
+              <a class="add-more" href="#more">Add more...</a>
+          
+
           <div>
             <button type="button" class="btn btn-default" id="CRN-close">Close</button>
             <button type="button" class="btn btn-primary" id="CRN-close">Lookup CRNs</button>

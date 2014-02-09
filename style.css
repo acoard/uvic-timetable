@@ -33,23 +33,17 @@ h2 {
 	width: 100%;
 }
 
+
+/*
+====================
+$control panel
+====================
+*/
+
 #control-panel-btn {
 	width: 100%;
 }
 
-/*
-THIS IS FOR THE OLD CTRL-PANEL.  Pretty sure it can be deleted as of 14/1/14
-#control-panel{
-	display: none;
-	text-align: center;
-	border-color: black;
-	border-radius: 2px;
-	padding: 4px;
-	padding-bottom: 15px;
-	background-color: #EFC94C;
-	position: absolute;
-	z-index: 1;
-}*/
 
 #control-panel{
     display: none;
@@ -63,7 +57,15 @@ THIS IS FOR THE OLD CTRL-PANEL.  Pretty sure it can be deleted as of 14/1/14
     text-align: center;
 }
 
+.course-name {
+    text-transform: capitalize;
+}
 
+/*
+====================
+$Timetable
+====================
+*/
 
 th {
 	text-align: center;
@@ -87,6 +89,12 @@ td.hours {
 .table-hover > tbody > tr:hover > td.courses {
   background-color: #DDE8D9;
 }
+
+/*
+====================
+$Footer
+====================
+*/
 
 .footer {
   padding-top: 30px;
