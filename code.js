@@ -1,20 +1,21 @@
 // TODO: Add a way so that when updating to a new semester file it automatically wipes previous saves.  Otherwise it'll lookup values that don't exist.
 
-$( document ).ready(function() {  // Function #1
+$( document ).ready(function() {  
 	$ctrl = $('#control-panel');
-	$("#control-panel-btn").click(function() { //Function #2
+	$("#control-panel-btn").click(function() { 
 		var btn = $(this); //This lets me reference it in the nested scope.
 		$ctrl.css({display: 'block'});
 		$ctrl.affix()
 		})
-	$('#CRN-submit').click(function(){ //Function #3
-		addCRN(parseInt($('#CRN-input').val()));
-		$('#control-panel').css({
-			display: 'none'
+	// $('#CRN-submit').click(function(){ 
+	$('body').on('click', '#CRN-submit', function(){
+		// $('[id^=CRN-input]').each(function(){console.log($(this).val())})
+		$('[id^=CRN-input]').each(function(){ 
+			console.log($(this).val());
+			addCRN(parseInt($(this).val()));
+			setTimeout(run, 150); //A really ghetto solution.  But it gives time for addCRN() to process.
+			// return false; //Stops scroll to top.
 		});
-		$('#CRN-input').val('');
-		setTimeout(run, 150); //A really ghetto solution.  But it gives time for addCRN() to process.
-		return false; //Stops scroll to top.
 	})
 	$('#CRN-close').click(function(){ //Function #4
 		$('#control-panel').css({
@@ -81,8 +82,8 @@ $( document ).ready(function() {  // Function #1
 	courseNum = 2; //used to give each row a unique CSS number.		
 	$("body").on("click", ".add-more", function(){
 		courseNumString = courseNum.toString();
-		$(this).after('<br><span class="course'+courseNumString+'"><label for="CRN-input">CRN: </label>\
-          <input id="CRN-input" placeholder="CRN" size="8" class="course'+ courseNumString+'">\
+		$(this).after('<br><span class="course'+courseNumString+'"><label for="CRN-input'+courseNumString+'">CRN: </label>\
+          <input id="CRN-input'+courseNumString+'" placeholder="CRN" size="8" class="course'+ courseNumString+'">\
           <i class="fa fa-check"></i>\
           <span class="lookup-info course'+courseNumString+'"><span class="course-name">PHIL 309: Imanuel Kant,</span>\
           <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span></span></span>\
