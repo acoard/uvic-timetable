@@ -15,23 +15,6 @@ A homebrew Javascript timetable application to work with the University of Victo
 
 The overview of the structure of the JS is that the Schedule object will be populated with numerous Course objects.  The Schedule object will roughly reflect to the 'user', and persistence will be managed in regards to schedules.
 
-#### Courses()
-
-Use course.getMonday() through friday to get an array of all the times that class is in session for that day.  For a given course, this would not include the applicable tutorials/labs, those must be added separately.
-
-course.addTimeBlock() is the method to add timeblocks to the course, but depending on how the data from UVic is stored this may be scraped and course instantiation may just take this into account.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Copyright (c) 2013 Adam Coard
