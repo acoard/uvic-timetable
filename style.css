@@ -129,14 +129,6 @@ $Footer
 	.navbar a, .navbar button {
 		    font-size:    70%;
 		}
-
-	#control-panel.affix, #control-panel.affix-top {
-		position: fixed;
-		/*top: 55px;*/
-		top: 60px;
-		width: 100%;
-	}
-
 }
 
 @media (min-width: 601px) {

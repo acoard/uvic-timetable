@@ -14,8 +14,8 @@ $( document ).ready(function() {
 			console.log($(this).val());
 			addCRN(parseInt($(this).val()));
 			setTimeout(run, 150); //A really ghetto solution.  But it gives time for addCRN() to process.
-			// return false; //Stops scroll to top.
 		});
+		return false; //Stops scroll to top.
 	})
 	$('#CRN-close').click(function(){ //Function #4
 		$('#control-panel').css({
@@ -29,10 +29,8 @@ $( document ).ready(function() {
 	$('#NextDay').click(function(){
 		changeDay("next");
 	})
-
-	if ($(window).width() >= 610) {
-		$('#control-panel').appendTo('.jumbotron');
-	}
+	$('#control-panel').appendTo('.jumbotron');
+	
 
 	//Add event handlers for every 'X' in each row.
 	$('.close').click(function() {
@@ -64,7 +62,7 @@ $( document ).ready(function() {
 	$('#save').click(function(){
 		Sched.saveSession();
 	})
-	if (localStorage.legnth > 0){loadSession();}
+	if (localStorage.length > 0){loadSession();}
 	
 	
 	$("body").on("focus", "[id^=CRN-input]", function(){ 
@@ -84,9 +82,9 @@ $( document ).ready(function() {
 		courseNumString = courseNum.toString();
 		$(this).after('<br><span class="course'+courseNumString+'"><label for="CRN-input'+courseNumString+'">CRN: </label>\
           <input id="CRN-input'+courseNumString+'" placeholder="CRN" size="8" class="course'+ courseNumString+'">\
-          <i class="fa fa-check"></i>\
-          <span class="lookup-info course'+courseNumString+'"><span class="course-name">PHIL 309: Imanuel Kant,</span>\
-          <span class="section">A01,</span> <span class="time-days">TWF 8pm-9pm</span></span></span>\
+          <i class="fa fa-search"></i>\
+          <span class="lookup-info course'+courseNumString+'"><span class="course-name"></span>\
+          <span class="section">Enter a five digit CRN</span> <span class="time-days"></span></span></span>\
           <a class="add-more" href="#more">Add more...</a>');
 		courseNum++;
 		$(this).remove();
@@ -111,7 +109,6 @@ function lookupCRN(search, courseNum) {
 		}).done(function() {
 			// Since this info is retrieved through an asychronous $.getJSON call, this UI editting has to occur here.
 			var course = "." + String(courseNum);
-			console.log(typeof(returnVal));
 			if (typeof(returnVal) != "undefined"){
 				console.log(returnVal);
 				$(course + ' i').attr('class', 'fa fa-check');
