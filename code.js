@@ -31,6 +31,12 @@ $( document ).ready(function() {
 		changeDay("next");
 		run();
 	})
+	// TODO: Change above functions above into one below
+	// $('.daychange').click(function(){
+	// 	$(this).inArray
+	// })
+
+
 	$('#control-panel').appendTo('.jumbotron');
 	
 
@@ -65,11 +71,17 @@ $( document ).ready(function() {
 		Sched.saveSession();
 	})
 	if (localStorage.length > 0){loadSession();}
+	//Load from URL
+	if (linkLoader(document.URL)){
+		console.log("URL loaded!");
+	}
+
+
 	
 	
-	$("body").on("focus", "[id^=CRN-input]", function(){ 
+	// $("body").on("focus", "[id^=CRN-input]", function(){ 
 	  
-	});
+	// });
 	
 	$("body").on("blur", "[id^=CRN-input]", function(){ 
 	  if ($(this).val().length >= 5) {
@@ -402,9 +414,14 @@ function linkLoader(url){
 	//Check if URL has courses in it.  If so, import.
 	if (url.indexOf("&") != -1){
 		crns = url.split("&").slice(1, url.length);
+		if (crns[crns.length-1].indexOf('#') != -1 ){
+			// URL ends with something like #more, so chop that bit off.
+			crns[crns.length-1] = crns[crns.length-1].slice(0, crns[crns.length-1].indexOf('#'));
+		}
 		loadCRNs(crns);
 		return crns;
 	}
+	else{return false;}
 }
 
 

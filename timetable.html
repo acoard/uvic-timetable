@@ -51,6 +51,7 @@ Adam Coard's "UVic Timetables"
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a id="save" class="button">Save</a></li>
+          <li><a id="export" class="button">Export</a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -83,13 +84,13 @@ Adam Coard's "UVic Timetables"
 
       	<div class="row">
       		<div class="col-md-3">
-		     	  <button type="button" id="PrevDay" class="btn btn-primary btn-block">Previous</button>
+		     	  <button type="button" id="PrevDay" class="btn btn-primary btn-block daychange">Previous</button>
 		     </div>
 			 <div class="col-md-6">
 		      	<h2 id="dayHeader">Monday</h2>
 		    </div>
 		    <div class="col-md-3">
-		      	<button type="button" id="NextDay" class="btn btn-primary btn-block">Next</button>
+		      	<button type="button" id="NextDay" class="btn btn-primary btn-block daychange">Next</button>
 		    </div>
 		    </div>
 
@@ -234,15 +235,17 @@ Adam Coard's "UVic Timetables"
 <div id="control-panel">
         <form roles="form">
           <h4>Enter your Course Registration Number or start typing in your course, e.g. PHIL 308.</h4>
-          <span class="course1">
-              <label for="CRN-input">CRN: </label>
-              <input id="CRN-input" placeholder="CRN" size="8" class="course1">
-              <i class="fa fa-search"></i>
-              <span class="lookup-info course1">
-                <span class="course-name"></span>
-                <span class="section">Enter a five digit CRN</span> <span class="time-days"></span>
-              </span></span>
-              <a class="add-more" href="#more">Add more...</a>
+          <span class="ctrl-panel-text">
+            <span class="course1">
+                <label for="CRN-input">CRN: </label>
+                <input id="CRN-input" placeholder="CRN" size="8" class="course1">
+                <i class="fa fa-search"></i>
+                <span class="lookup-info course1">
+                  <span class="course-name"></span>
+                  <span class="section">Enter a five digit CRN</span> <span class="time-days"></span>
+                </span></span>
+                <a class="add-more" href="#more">Add more...</a>
+            </span>
           
 
           <div>

@@ -61,6 +61,11 @@ $control panel
     text-transform: capitalize;
 }
 
+.ctrl-panel-text {
+    font-size: 18px;
+}
+
+
 /*
 ====================
 $Timetable
@@ -131,13 +136,13 @@ $Footer
 		}
 }
 
-@media (min-width: 601px) {
+/*@media (min-width: 601px) {
 	#control-panel.affix, #control-panel.affix-top {
 		position: relative;
 		transition: width 2s;
 -webkit-transition: width 2s; /* Safari */
 	}
-} 
+} */
 
 .btn-primary, .navbar button.btn.btn-success {
  font-family: 'Open Sans', sans-serif;
@@ -188,7 +193,7 @@ div.jumbotron {
  
 }
 
-#save {
+.navbar-right > li > a.button {
     cursor: pointer;
 }
 
