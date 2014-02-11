@@ -25,9 +25,11 @@ $( document ).ready(function() {
 	})
 	$('#PrevDay').click(function(){
 		changeDay("back");
+		run();
 	})
 	$('#NextDay').click(function(){
 		changeDay("next");
+		run();
 	})
 	$('#control-panel').appendTo('.jumbotron');
 	
@@ -132,7 +134,9 @@ lookupCRN()
 function trimTime(input){
 	//Input: 06:30 pm-09:20 Output: 0630
 	//Input is found in the Course objects, output in CSS/HTML.
-	return input.slice(0,5).replace(':','')
+	if (typeof(input) != "undefined"){
+		return input.slice(0,5).replace(':','');
+		}
 }
 
 function trimRoom(input){
@@ -178,25 +182,31 @@ function changeDay(input){
 
 function Course(input){
 	//Takes the JSONified course data from addCRN as input.
-	this.crn = input.crn;
-	this.courseBlock = input.courseBlock;
-	this.courseDay = input.courseDay;
-	this.courseNumber = input.courseNumber;
-	this.discipline = input.discipline;
-	this.schedule = input.schedule;
-	this.verboseName = input.verboseName;
-	this.timeblock = input.timeblock;
-	this.room = input.location; //FIXME: Sometimes this has a \n at the end.
-	this.days = []; //Characters for days e.g. T, W, F.  Also includes Th.
-	if (this.courseDay.indexOf("Th") > -1 ) 
-	{
-		this.days = String(this.courseDay.replace('Th', '')).split('');
-		this.days.push("Th");
-		//this.courseDay = this.courseDay.replace('Th', '');
-		
+	//TODO: VALIDATE INPUT HERE
+	if (typeof(input) != "undefined"){
+		this.crn = input.crn;
+		this.courseBlock = input.courseBlock;
+		this.courseDay = input.courseDay;
+		this.courseNumber = input.courseNumber;
+		this.discipline = input.discipline;
+		this.schedule = input.schedule;
+		this.verboseName = input.verboseName;
+		this.timeblock = input.timeblock;
+		this.room = input.location; //FIXME: Sometimes this has a \n at the end.
+		this.days = []; //Characters for days e.g. T, W, F.  Also includes Th.
+		if (this.courseDay.indexOf("Th") > -1 ) 
+		{
+			this.days = String(this.courseDay.replace('Th', '')).split('');
+			this.days.push("Th");
+			//this.courseDay = this.courseDay.replace('Th', '');
+			
+		}
+		else {
+			this.days = String(this.courseDay).split('') 	
+		}
 	}
 	else {
-		this.days = String(this.courseDay).split('') 	
+		console.log("Course input == undefined.");
 	}
 }
 
@@ -336,6 +346,7 @@ else
 }
 
 loadSession = function(){
+	//Loads from localStorage
 	//Loads a list of CRNs, passing each through addCRN().
 	console.log("Loading previous session's CRNs...");
 	var crns = eval(localStorage.getItem('userCRNs'));
@@ -343,6 +354,15 @@ loadSession = function(){
 		addCRN(crns[i])
 	}
 	setTimeout(run, 1000);
+}
+
+loadCRNs = function(crns){
+	//Loads taking a list of CRNs.
+	//TODO: Update LoadSession so as to use this fn.
+	for (var i = 0; i < crns.length; i++){
+		console.log("loadCRNS a firing: " + crns[i])
+		addCRN(crns[i])
+	}
 }
 
 function addCRN(search) {
@@ -377,7 +397,15 @@ function addCRN(search) {
 }
 
 
-
+function linkLoader(url){
+	//"http://www.acoard.com/tables/timetable.html?&200052&19999&12345
+	//Check if URL has courses in it.  If so, import.
+	if (url.indexOf("&") != -1){
+		crns = url.split("&").slice(1, url.length);
+		loadCRNs(crns);
+		return crns;
+	}
+}
 
 
 
