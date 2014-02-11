@@ -357,6 +357,17 @@ else
   }
 }
 
+User.prototype.getCRNs = function(){
+	//Returns an array of crns, automatically discarding undefined values.
+  	var arrayOfCRNs = new Array();
+	for (crn in Sched["courses"]){
+		if (crn != "undefined"){
+			arrayOfCRNs.push(crn);
+		}
+  	}
+  	return arrayOfCRNs;
+}
+
 loadSession = function(){
 	//Loads from localStorage
 	//Loads a list of CRNs, passing each through addCRN().
@@ -425,7 +436,14 @@ function linkLoader(url){
 }
 
 
+function exportLink(crns){
+	//takes Sched["courses"] as input
+  	var arrayOfCRNs = new Array();
+	for (crn in Sched["courses"]){
+  		arrayOfCRNs.push(crn);
+  	}
 
+}
 
 
 if (DEBUG){
