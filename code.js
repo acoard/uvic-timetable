@@ -5,9 +5,8 @@ $( document ).ready(function() {
 	$("#control-panel-btn").click(function() { 
 		var btn = $(this); //This lets me reference it in the nested scope.
 		$ctrl.css({display: 'block'});
-		$ctrl.affix()
+		// $ctrl.affix() -UNSURE IF STILL USED
 		})
-	// $('#CRN-submit').click(function(){ 
 	$('body').on('click', '#CRN-submit', function(){
 		// $('[id^=CRN-input]').each(function(){console.log($(this).val())})
 		$('[id^=CRN-input]').each(function(){ 
@@ -102,6 +101,29 @@ $( document ).ready(function() {
           <a class="add-more" href="#more">Add more...</a>');
 		courseNum++;
 		$(this).remove();
+	});
+
+	$('#export').click(function(){
+		//TODO: FILL THIS OUT
+		console.log("Export!");
+		var url = exportLink(Sched.getCRNs());
+		$('#export-panel input').val(url); 
+		$('#export-panel').css({visibility: 'visible', opacity: '1',
+		    'opacity': '0.8',
+		    'position': 'fixed',
+		    'top': '55px',
+		    'right': '10%',
+		    'transition': 'all 0.5s ease 0s, visibility 0s linear 0.5s;'
+		    });
+	})
+	$(document).mouseup(function (e){
+	    var container = $("#export-panel");
+		    if (!container.is(e.target)  // if the target of the click isn't the container...
+		        && container.has(e.target).length == 0){ // ... nor a descendant of the container
+		    		// console.log(e.target);
+		    		console.log(container.has(e.target).length == 0)
+		        	container.css({visibility: 'hidden'});
+	    		}
 	});
 });
 
@@ -388,6 +410,8 @@ loadCRNs = function(crns){
 	}
 }
 
+
+
 function addCRN(search) {
 		//Currently having troubles getting the function to return properly.  I think it's because it's an async fn, return in .done?
 		//INTENDED: Return the new Course object.
@@ -437,13 +461,19 @@ function linkLoader(url){
 
 
 function exportLink(crns){
-	//takes Sched["courses"] as input
-  	var arrayOfCRNs = new Array();
-	for (crn in Sched["courses"]){
-  		arrayOfCRNs.push(crn);
-  	}
-
+	//takes Sched.getCRNs() as input
+	if (crns.length > 0){
+		base = 'http://www.acoard.com/tables/timetable.html?';
+		for (var i = 0; i < crns.length ; i++){
+			base += "#" + crns[i];
+			}
+			return base;
+		}
+	else {alert("yo u need courses");}
+	
 }
+
+
 
 
 if (DEBUG){
