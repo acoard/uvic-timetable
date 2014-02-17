@@ -5,7 +5,6 @@ $( document ).ready(function() {
 	$("#control-panel-btn").click(function() { 
 		var btn = $(this); //This lets me reference it in the nested scope.
 		$ctrl.css({display: 'block'});
-		// $ctrl.affix() -UNSURE IF STILL USED
 		})
 	$('body').on('click', '#CRN-submit', function(){
 		// $('[id^=CRN-input]').each(function(){console.log($(this).val())})
@@ -13,10 +12,13 @@ $( document ).ready(function() {
 			console.log($(this).val());
 			addCRN(parseInt($(this).val()));
 			setTimeout(run, 150); //A really ghetto solution.  But it gives time for addCRN() to process.
+			$('#control-panel').css({
+				display: 'none'
+				});
 		});
 		return false; //Stops scroll to top.
 	})
-	$('#CRN-close').click(function(){ //Function #4
+	$('#CRN-close').click(function(){ 
 		$('#control-panel').css({
 			display: 'none'
 		});
@@ -122,8 +124,11 @@ $( document ).ready(function() {
 		        && container.has(e.target).length == 0){ // ... nor a descendant of the container
 		    		// console.log(e.target);
 		    		console.log(container.has(e.target).length == 0)
-		        	container.css({visibility: 'hidden'});
+		        	container.css({opacity: '0', top: '0px'});
 	    		}
+	});
+	$('#export-panel button').click(function(){
+		$('#export-panel input').select();
 	});
 });
 
@@ -469,8 +474,6 @@ function exportLink(crns){
 			}
 			return base;
 		}
-	else {alert("yo u need courses");}
-	
 }
 
 

@@ -75,7 +75,10 @@ $export panel
     visibility: hidden;
     top: 1%;
     transition: all 0.5s ease 0.5s, visibility 0s linear 0.5s; /* the last value is the transition-delay for visibility */
+    padding: 5px 5px 5px 5px;
+    background: #c64a5c;
 }
+
 
 /*
 ====================

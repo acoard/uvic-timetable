@@ -50,13 +50,13 @@ Adam Coard's "UVic Timetables"
           <a class="navbar-brand" href="#">T</a> 
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a id="save" class="button">Save</a></li>
+
           <li><a id="export" class="button">Export</a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="about.html">About</a></li>
-                <li><a href="#">Options</a></li>
+                <li><a href="faq.html">Help</a></li>
                 <li><a href="#">Legal</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Follow me!</li>
@@ -74,7 +74,7 @@ Adam Coard's "UVic Timetables"
       <div class="jumbotron">
         <h1>Tables for UVic</h1>
         <p class="lead">A simple solution to getting a mobile-friendly <b>timetable</b> of your courses at the University of Victoria.
-          <a href="#POPUPTIME">Learn more.</a>  </p>
+          <a href="faq.html">Learn more.</a>  </p>
         <p><a class="btn btn-lg btn-success" id="control-panel-btn"type="button"><span id="btnText">Just input a CRN to get started</span></a></p>             
       </div>
 
@@ -254,8 +254,8 @@ Adam Coard's "UVic Timetables"
   </div>
 
 <div id="export-panel">
-  <input type="text" readonly value="Add some courses first!">
-  <button><i class="fa fa-files-o"></i></button>
+  <input type="text" readonly value="Add some courses first!" onClick="this.select();">
+  <button class="">Select</button>
 </div>
 
 
