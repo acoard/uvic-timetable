@@ -47,7 +47,7 @@ Adam Coard's "UVic Timetables"
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="timetable.html">T</a> 
+          <a class="navbar-brand" href="index.html">T</a> 
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a id="save" class="button">Save</a></li>
@@ -59,7 +59,7 @@ Adam Coard's "UVic Timetables"
                 <li><a href="legal.html">Legal</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Follow me!</li>
-                <li><a href="www.acoard.com">acoard.com</a></li>
+                <li><a href="http://www.acoard.com">acoard.com</a></li>
                 <li><a href="https://twitter.com/AdamCoard">Twitter</a></li>
               </ul>
             </li>
@@ -87,7 +87,12 @@ Adam Coard's "UVic Timetables"
         <h3>Do I have to type in all my CRNs on my phone?</h3>
         <p>You don't!  Our export feature is designed to stop exactly this.  Simply enter your CRNs on your computer then click 'Export' in the top right.  Send this link to your phone (e.g. through email or Facebook)  When you open that link on your phone all your courses will automatically be added.</p>
         <h3>How does the export feature work?</h3>
-        <p>The export feature stores all courses in the URL.  So, if you had added three courses with the CRNS 20001, 20051, and 20052, your URL would look like http://www.tablesforuvic.com/index.html?#20001#20051#20052. </h3>
+        <p>The export feature stores all courses in the URL.  So, if you had added three courses with the CRNS 20001, 20051, and 20052, your URL would look like http://www.tablesforuvic.com/index.html?&20001#20051#20052.  Note the ?& after index.html - this tells the software that codes are following.  After that comes the 5 digit CRNs separated by #s.</p>
+
+
+        <h3>Can I look at the source code?</h3>
+        <p>Of course!  It's on Github, <a href="https://github.com/acoard/uvic-timetable">here</a>.  It's under the MIT license so you're free to do whatever you'd like with it, but if you use my code for anything I'd appreciate the heads up (I may even help you out!). I do my best to keep the readme up to date, but as the code is constantly changing I find I'm losing that battle.</p>
+
 
 
 

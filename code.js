@@ -122,14 +122,15 @@ $( document ).ready(function() {
 	    var container = $("#export-panel");
 		    if (!container.is(e.target)  // if the target of the click isn't the container...
 		        && container.has(e.target).length == 0){ // ... nor a descendant of the container
-		    		// console.log(e.target);
-		    		console.log(container.has(e.target).length == 0)
 		        	container.css({opacity: '0', top: '0px'});
 	    		}
 	});
 	$('#export-panel button').click(function(){
 		$('#export-panel input').select();
 	});
+	$('a.more').click(function(){
+		$('div.more').css({'max-height': '500px', visibility: 'visible'})
+	})
 });
 
 $ctrl = $('#control-panel');
