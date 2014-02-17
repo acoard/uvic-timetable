@@ -471,7 +471,7 @@ function exportLink(crns){
 		if (document.URL.indexOf("acoard") >= 0){base = 'http://www.acoard.com/tables/index.html?';}
 		else if (document.URL.indexOf("tablesforuvic") >= 0) {base = 'http://www.tablesforuvic.com/index.html?'}
 
-		base = 'http://www.acoard.com/tables/timetable.html?';
+		// base = 'http://www.acoard.com/tables/timetable.html?';
 		for (var i = 0; i < crns.length ; i++){
 			base += "#" + crns[i];
 			}
